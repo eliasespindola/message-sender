@@ -9,7 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AbstractMessage {
+public class Message {
     private Body body;
-
+    private String type;
+    private Properties properties;
 }

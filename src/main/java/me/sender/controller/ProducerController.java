@@ -1,10 +1,8 @@
 package me.sender.controller;
 
 import lombok.AllArgsConstructor;
-import me.sender.repository.AbstractMessageRepository;
 import me.sender.service.ProducerService;
-import me.sender.domain.AbstractMessage;
-import org.springframework.beans.factory.annotation.Autowired;
+import me.sender.domain.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,12 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class ProducerController {
     private ProducerService producerService;
-    private AbstractMessageRepository abstractMessageRepository;
-
     @PostMapping(value = "/producer")
-    public ResponseEntity sendMessage(@RequestBody AbstractMessage abstractMessage)  {
-        abstractMessageRepository.save(abstractMessage);
-        producerService.send(abstractMessage);
+    public ResponseEntity sendMessage(@RequestBody Message message)  {
+        producerService.send(message);
         return ResponseEntity.ok().build();
     }
 }

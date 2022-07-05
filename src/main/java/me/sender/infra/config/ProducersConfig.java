@@ -1,6 +1,7 @@
 package me.sender.infra.config;
 
-import me.sender.domain.AbstractMessage;
+import me.sender.domain.Message;
+import me.sender.domain.dto.MessageDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +20,7 @@ import static me.sender.infra.config.AppConstants.BOOTSTRAP_SERVERS;
 public class ProducersConfig {
 
     @Bean
-    public ProducerFactory<String, AbstractMessage> producerFactory() {
+    public ProducerFactory<String, MessageDTO> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -28,7 +29,7 @@ public class ProducersConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, AbstractMessage> kafkaTemplate() {
+    public KafkaTemplate<String, MessageDTO> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }
