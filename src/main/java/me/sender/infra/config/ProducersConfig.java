@@ -16,10 +16,10 @@ import java.util.Map;
 import static me.sender.infra.config.AppConstants.BOOTSTRAP_SERVERS;
 
 @Configuration
-class ProducersConfig {
+public class ProducersConfig {
 
     @Bean
-    ProducerFactory<String, AbstractMessage> producerFactory() {
+    public ProducerFactory<String, AbstractMessage> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -28,7 +28,7 @@ class ProducersConfig {
     }
 
     @Bean
-    KafkaTemplate<String, AbstractMessage> kafkaTemplate() {
+    public KafkaTemplate<String, AbstractMessage> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

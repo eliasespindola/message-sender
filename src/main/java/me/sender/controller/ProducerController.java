@@ -1,5 +1,7 @@
 package me.sender.controller;
 
+import lombok.AllArgsConstructor;
+import me.sender.repository.AbstractMessageRepository;
 import me.sender.service.ProducerService;
 import me.sender.domain.AbstractMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/kafka")
-class ProducerController {
-    @Autowired
-    ProducerService kafkaProducer;
+@AllArgsConstructor
+public class ProducerController {
+    private ProducerService producerService;
+    private AbstractMessageRepository abstractMessageRepository;
 
     @PostMapping(value = "/producer")
-    ResponseEntity sendMessage(@RequestBody AbstractMessage abstractMessage)  {
-        kafkaProducer.send(abstractMessage);
+    public ResponseEntity sendMessage(@RequestBody AbstractMessage abstractMessage)  {
+        abstractMessageRepository.save(abstractMessage);
+        producerService.send(abstractMessage);
         return ResponseEntity.ok().build();
     }
 }
